@@ -43,7 +43,7 @@
 ;; will be invisible but the newline character will be left visible resulting in
 ;; somewhat "fluffier" appereance. Whan the value is set to `t' even newline
 ;; character will be hidden resulting in more dense and compact code. That might
-;; not be for everyone, so sett it to your own preference. It is `nil' by
+;; not be for everyone, so set it to your own preference. It is `nil' by
 ;; default.
 
 ;;; Code:
