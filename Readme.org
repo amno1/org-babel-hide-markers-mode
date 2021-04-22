@@ -1,0 +1,42 @@
+* About
+
+  A small hack to reduce clutter in my init file, but can be potentially used
+  elsewhere too. It will hide source code block markers by changing their
+  'invisible' text property.
+
+  This is not a package. I don't think it is robust enough and thus not of good
+  quality, so I have no plans to submit this as a package to neither Elpa nor
+  Melpa. Maybe I will rework it one day, but for now I don't have such plans.
+
+* Installation  
+
+  Either clone this repo or just download 'ob-hide-markers.el'. From there you
+  have option to either M-x package-install-file RET ob-hide-markers.el RET or
+  just put the file somewhere where Emacs can find it and do appropriate
+  autoload or require.
+
+* Usage
+
+  M-x org-babel-hide-markers-mode to turn it on/off.
+
+  There is also an additional command: org-babel-refresh-markers. It can be used
+  to hide markers if font-lock has re-drawn markers for some reason, or you
+  added new ones etc.
+
+* Issues
+
+ Due to how font-lock mechanism in Emacs works, if fontification is triggered
+ after the markers were hidden, the properties will be removed and markers
+ revealed. For this to work this mode has to run after the font-lock has done
+ it's processing, so it calls font-lock-ensure before it does it's work, which
+ might be costly (double-work).
+  
+* Screenshots
+
+  [[./mode.png]]
+
+  [[./init.png]]
+
+* License
+
+  GPL v3. For details, see the atached [[./LICENSE][license file]].
