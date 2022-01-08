@@ -18,6 +18,12 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+;; Author: Arthur Miller
+;; Version: 0.0.1
+;; Keywords: tools convenience
+;; Package-Requires: ((emacs "23.2"))
+;; URL: https://github.com/amno1/org-babel-hide-markers-mode
+
 ;;; Commentary:
 
 ;; A minor mode to help reduce clutter in org-babel code blocks by
@@ -45,6 +51,17 @@
 ;; character will be hidden resulting in more dense and compact code. That might
 ;; not be for everyone, so set it to your own preference. It is `nil' by
 ;; default.
+
+;;; Issues
+
+;; I didn't meant this to be installed as a package, since I don't think it is a
+;; "package quality" to be honest. It was more just an experimental hack. There
+;; are problems with it that I haven't solved, for example there is popping of
+;; src_block markers, which I am not sure why. I believe due to synergy (or lack
+;; of) between font-lock and org-mode. Another issue is that it can be tricky to
+;; enter src_blocks when this mode is enabled, since it works on very "wide"
+;; regex, if you check hbm--marker-re. That one is easily fixed though, but
+;; fixing the popping probably requires a bit more work. 
 
 ;;; Code:
 (defcustom org-babel-hide-markers-line nil
