@@ -4,10 +4,6 @@
   elsewhere too. It will hide source code block markers by changing their
   'invisible' text property.
 
-  This is not a package. I don't think it is robust enough and thus not of good
-  quality, so I have no plans to submit this as a package to neither Elpa nor
-  Melpa. Maybe I will rework it one day, but for now I don't have such plans.
-
 * Installation  
 
   Either clone this repo or just download 'ob-hide-markers.el'. From there you
@@ -18,10 +14,6 @@
 * Usage
 
   M-x org-babel-hide-markers-mode to turn it on/off.
-
-  There is also an additional command: org-babel-refresh-markers. It can be used
-  to hide markers if font-lock has re-drawn markers for some reason, or you
-  added new ones etc.
 
 * Issues
 

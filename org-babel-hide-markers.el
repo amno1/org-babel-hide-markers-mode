@@ -1,4 +1,4 @@
-;;; ob-hide-markers.el --- Hide or-babel source code markers.  -*- lexical-binding: t; -*-
+;;; org-babel-hide-markers.el --- Hide org-babel source code markers  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2021  Arthur Miller
 
@@ -21,7 +21,7 @@
 ;; Author: Arthur Miller
 ;; Version: 0.0.1
 ;; Keywords: tools convenience
-;; Package-Requires: ((emacs "23.2"))
+;; Package-Requires: ((emacs "25.1"))
 ;; URL: https://github.com/amno1/org-babel-hide-markers-mode
 
 ;;; Commentary:
@@ -40,37 +40,46 @@
 ;; Use `hbm-refresh' if you add new code blocks, copy-paste etc.
 ;;
 ;; Alternatively it is possible to turn on/off markers for an individual source
-;; code by executing `M-x hbm-toggle-current-block'. It does not require
+;; code by executing `M-x hbm-toggle-current-block'.  It does not require
 ;; org-hbm-mode to be on, but you will have to call it again to make markers
 ;; visible again.
 ;;
 ;; It is possible to somewhat control the appereance of org-file by customizing
-;; the `orh-hbm-hide-marker-line' variable. When this variable is nil, markers
+;; the `orh-hbm-hide-marker-line' variable.  When this variable is nil, markers
 ;; will be invisible but the newline character will be left visible resulting in
-;; somewhat "fluffier" appereance. Whan the value is set to `t' even newline
-;; character will be hidden resulting in more dense and compact code. That might
-;; not be for everyone, so set it to your own preference. It is `nil' by
+;; somewhat "fluffier" appereance.  Whan the value is set to `t' even newline
+;; character will be hidden resulting in more dense and compact code.  That might
+;; not be for everyone, so set it to your own preference.  It is `nil' by
 ;; default.
 
 ;;; Issues
 
 ;; It can be tricky to enter src_blocks when this mode is enabled, since it
-;; works on very "wide" regex, if you check hbm--marker-re. That one is easily
-;; fixed though.
+;; works on very "wide" regex, (check hbm--marker-re). You might need to
+;; turn-off/turn-on the mode, if you are typing them manually.
 
 ;;; Code:
-(defcustom org-babel-hide-markers-line nil
-  "If value of this variable is `t', org-hbm mode vill hide also line on which
-  source code block markers are, otherwise only markers are hidden leaving an
-  empty line."
-  :group 'org-babel
+(defgroup org-babel-hide-markers nil
+  "Hide babel source code markers in org-mode."
   :prefix "hbm--"
-  :type 'boolean
-  :tag "Org Babel Hide Source Block Markers Line")
+  :prefix "org-babel-"
+  :group 'org-babel)
 
-(defvar hbm--marker-re "^[ \t]*#\\+\\(begin\\|end\\)_src")
+(defcustom org-babel-hide-markers-line nil
+  "Whether the resulting empty line after hiding marker will also be hidden.
+
+If value of this variable is 't, even the resulting empty line will be
+hidden, otherwise only the markers themselves are hidden leaving an empty line."
+  :group 'org-babel-hide-markers
+  :type 'boolean)
+
+(defvar hbm--marker-re "^[ \t]*#\\+\\(begin\\|end\\)_src"
+  "Regex used to recognize source block markers.")
 
 (defun hbm--update-line (visibility)
+  "Internal method do not use.
+
+Set lines invisible property to VISIBILITY."
   (let ((beg (if org-babel-hide-markers-line
                  (1- (line-beginning-position))
                (line-beginning-position)))
@@ -78,6 +87,9 @@
   (put-text-property beg end 'invisible visibility)))
 
 (defun hbm--update-markers (visibility)
+  "Internal method do not use.
+
+Update invisible property to VISIBILITY for markers in the current buffer."
   (save-excursion
     (goto-char (point-min))
     (with-silent-modifications
@@ -85,25 +97,16 @@
         (hbm--update-line visibility)))))
 
 ;;;###autoload
-(defun org-babel-refresh-markers ()
-  (interactive)
-  (when (bound-and-true-p org-babel-hide-markers-mode)
-    (unless org-babel-hide-markers-mode
-      (error "Org-hide-babel-markers mode is not enabled."))
-    (font-lock-ensure)
-    (hbm--update-markers t)))
-
-;;;###autoload
 (define-minor-mode org-babel-hide-markers-mode
   "Hide/show babel source code blocks on demand."
   :global nil :lighter " OB Hmm"
   (unless (derived-mode-p 'org-mode)
-    (error "Not in org-mode."))
+    (error "Not in org-mode"))
   (cond (org-babel-hide-markers-mode
          (hbm--update-markers nil))
         (t (font-lock-ensure)
            (hbm--update-markers t))))
 
-(provide 'ob-hide-markers)
+(provide 'org-babel-hide-markers)
 
-;;; ob-hide-markers.el ends here
+;;; org-babel-hide-markers.el ends here
