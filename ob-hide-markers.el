@@ -69,24 +69,25 @@
   source code block markers are, otherwise only markers are hidden leaving an
   empty line."
   :group 'org-babel
+  :prefix "hbm--"
   :type 'boolean
   :tag "Org Babel Hide Source Block Markers Line")
 
 (defvar hbm--marker-re "^[ \t]*#\\+\\(begin\\|end\\)_src")
 
-(defun hbm--update-line (visible)
+(defun hbm--update-line (visibility)
   (let ((beg (if org-babel-hide-markers-line
                  (1- (line-beginning-position))
                (line-beginning-position)))
         (end (line-end-position)))
-  (put-text-property beg end 'invisible visible)))
+  (put-text-property beg end 'invisible visibility)))
 
-(defun hbm--update-markers (visible)
+(defun hbm--update-markers (visibility)
   (save-excursion
     (goto-char (point-min))
     (with-silent-modifications
       (while (re-search-forward hbm--marker-re nil t)
-        (hbm--update-line visible)))))
+        (hbm--update-line visibility)))))
 
 ;;;###autoload
 (defun org-babel-refresh-markers ()
