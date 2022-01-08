@@ -33,8 +33,8 @@
 ;;
 ;;          `M-x org-babel-hide-markers-mode.'
 ;;
-;; To turn it off execute same command.
-;;
+;; To turn it off execute the same command.
+
 ;;; Issues
 
 ;; It can be tricky to enter src_blocks when this mode is enabled, since it
