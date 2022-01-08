@@ -31,27 +31,10 @@
 ;;
 ;; To hide all markers turn on org-hbm-mode by
 ;;
-;;          `M-x org-hbm-mode.'
+;;          `M-x org-babel-hide-markers-mode.'
 ;;
 ;; To turn it off execute same command.
 ;;
-;; The mode provides two additional interactive commands.
-;;
-;; Use `hbm-refresh' if you add new code blocks, copy-paste etc.
-;;
-;; Alternatively it is possible to turn on/off markers for an individual source
-;; code by executing `M-x hbm-toggle-current-block'.  It does not require
-;; org-hbm-mode to be on, but you will have to call it again to make markers
-;; visible again.
-;;
-;; It is possible to somewhat control the appereance of org-file by customizing
-;; the `orh-hbm-hide-marker-line' variable.  When this variable is nil, markers
-;; will be invisible but the newline character will be left visible resulting in
-;; somewhat "fluffier" appereance.  Whan the value is set to `t' even newline
-;; character will be hidden resulting in more dense and compact code.  That might
-;; not be for everyone, so set it to your own preference.  It is `nil' by
-;; default.
-
 ;;; Issues
 
 ;; It can be tricky to enter src_blocks when this mode is enabled, since it
