@@ -79,7 +79,7 @@ hidden, otherwise only the markers themselves are hidden leaving an empty line."
 (defun hbm--update-line (visibility)
   "Internal method do not use.
 
-Set lines invisible property to VISIBILITY."
+Set the invisible property of a line to VISIBILITY."
   (let ((beg (if org-babel-hide-markers-line
                  (1- (line-beginning-position))
                (line-beginning-position)))
