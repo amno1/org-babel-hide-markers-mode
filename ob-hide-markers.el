@@ -92,10 +92,11 @@
 ;;;###autoload
 (defun org-babel-refresh-markers ()
   (interactive)
-  (unless org-babel-hide-markers-mode
-    (error "Org-hide-babel-markers mode is not enabled."))
-  (font-lock-ensure)
-  (hbm--update-markers t))
+  (when (bound-and-true-p org-babel-hide-markers-mode)
+    (unless org-babel-hide-markers-mode
+      (error "Org-hide-babel-markers mode is not enabled."))
+    (font-lock-ensure)
+    (hbm--update-markers t)))
 
 ;;;###autoload
 (define-minor-mode org-babel-hide-markers-mode
