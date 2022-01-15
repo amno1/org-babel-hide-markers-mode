@@ -38,14 +38,13 @@
 ;;; Issues
 
 ;; It can be tricky to enter src_blocks when this mode is enabled, since it
-;; works on very "wide" regex, (check hbm--marker-re). You might need to
+;; works on very "wide" regex, (check the marker regex). You might need to
 ;; turn-off/turn-on the mode, if you are typing them manually.
 
 ;;; Code:
 (defgroup org-babel-hide-markers nil
   "Hide babel source code markers in org-mode."
-  :prefix "hbm--"
-  :prefix "org-babel-"
+  :prefix "org-babel-hide-markers-"
   :group 'org-babel)
 
 (defcustom org-babel-hide-markers-line nil
@@ -56,28 +55,24 @@ hidden, otherwise only the markers themselves are hidden leaving an empty line."
   :group 'org-babel-hide-markers
   :type 'boolean)
 
-(defvar hbm--marker-re "^[ \t]*#\\+\\(begin\\|end\\)_src"
+(defvar org-babel-hide-markers--re "^[ \t]*#\\+\\(begin\\|end\\)_src"
   "Regex used to recognize source block markers.")
 
-(defun hbm--update-line (visibility)
-  "Internal method do not use.
-
-Set the invisible property of a line to VISIBILITY."
+(defun org-babel-hide-markers--update-line (visibility)
+  "Set the invisible property of a line to VISIBILITY."
   (let ((beg (if org-babel-hide-markers-line
                  (1- (line-beginning-position))
                (line-beginning-position)))
         (end (line-end-position)))
   (put-text-property beg end 'invisible visibility)))
 
-(defun hbm--update-markers (visibility)
-  "Internal method do not use.
-
-Update invisible property to VISIBILITY for markers in the current buffer."
+(defun org-babel-hide-markers--update-markers (visibility)
+  "Update invisible property to VISIBILITY for markers in the current buffer."
   (save-excursion
     (goto-char (point-min))
     (with-silent-modifications
-      (while (re-search-forward hbm--marker-re nil t)
-        (hbm--update-line visibility)))))
+      (while (re-search-forward org-babel-hide-markers--re nil t)
+        (org-babel-hide-markers--update-line visibility)))))
 
 ;;;###autoload
 (define-minor-mode org-babel-hide-markers-mode
@@ -86,9 +81,9 @@ Update invisible property to VISIBILITY for markers in the current buffer."
   (unless (derived-mode-p 'org-mode)
     (error "Not in org-mode"))
   (cond (org-babel-hide-markers-mode
-         (hbm--update-markers nil))
+         (org-babel-hide-markers--update-markers nil))
         (t (font-lock-ensure)
-           (hbm--update-markers t))))
+           (org-babel-hide-markers--update-markers t))))
 
 (provide 'org-babel-hide-markers)
 
